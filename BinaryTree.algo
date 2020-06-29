@@ -1,1 +1,124 @@
-FUNCTION
+//function that gives the number of nodes in the tree.
+
+FUNCTION numberNode(root : ^Bi_tree) : INTEGER
+VAR
+    x : INTEGER := 0 ;
+BEGIN
+    IF (root = NULL) THEN
+        RETURN x ;
+    END_IF
+    IF (root<>NULL) THEN
+
+        RETURN (1 + numberNode(root^.LC) + numberNode(root^.RC)) ; 
+        
+        END_IF
+END
+
+
+// function that gives height
+FUNCTION height (root :^Bi_tree) : INTEGER
+VAR
+    xRight , xLeft :INTEGER ;
+BEGIN
+    IF (root == NULL) THEN
+        RETURN 0 ;
+    ELSE
+        xRight := 1 + height(root^.RC) ;
+        xLeft := 1 + height(root^.LC) ;
+
+        IF (xRight>xLeft) THEN
+            RETURN xRight ;
+        ELSE
+            RETURN xLeft ;
+        END_IF
+    END_IF
+END
+
+// function that gives the number of leaves in the tree.
+FUNCTION LeavesTrr(root : ^Bi_tree) : INTEGER
+
+BEGIN
+    IF (root = NULL) THEN
+        RETURN 0 ;
+    END_IF
+    IF (root^.LC = NULL AND root^.RC = NULL) THEN
+        RETURN 1 ;
+    ELSE
+        RETURN ( LeavesTrr(root^.LC) + LeavesTrr(root^.RC));
+    END_IF
+END
+
+// function that gives the maximum value in the tree.
+FUNCTION Maximum (root :^Bi_tree) : INTEGER
+VAR
+    max : INTEGER ;
+BEGIN
+    IF (root = NULL) THEN
+        RETURN 0 ; 
+    ELSE
+        max = root^.VAL ;
+        IF (max < root^.LC.VAL) THEN
+            max := root^.LC.VAL ;
+            maximum (max) ;
+        ELSE_IF ( max <root^.RC.VAL) THEN
+            max := root^.RC.VAL ;
+            maximum(max) ; 
+        
+        ELSE
+            RETURN root.VAL
+
+        END_IF
+    END_IF
+END
+
+// function to test if the tree is a full binary tree.
+FUNCTION IsFUlltree(root :^Bi_tree) : BOOLEAN
+VAR
+    set_declarations
+BEGIN
+    IF (root = NULL) THEN
+        RETURN TRUE ; 
+    END_IF
+
+    IF (root^.lc = NULL AND root^.RC = NULL) THEN
+        RETURN TRUE ;
+    
+    ELSE_IF(root^.LC <> NULL AND root^.RC <> NULL) THEN
+        isFullTree (root^.LC ) AND isFullTree (root^.RC) ;
+
+    ELSE 
+        RETURN FALSE ; 
+    END_IF
+
+END
+
+
+
+
+ALGORITHM algorithm_name
+VAR
+    nbN , hght , LeavTree , max: INTEGER ;
+    FullTree : BOOLEAN ;
+    fuLL
+    
+    Bi_tree :   STRUCT
+        VAL : INTEGER; 
+        LC : ^Bi_tree; // a pointer to left child
+        RC : ^Bi_tree; // a pointer to right child
+    END_STRUCT
+
+BEGIN
+    root : Bi_tree ;
+
+    nbN := numberNode(root) ; //number of nodes
+
+    hght := height(root) ; // height of tree
+
+    LeavesTrr := LeavesTrr(root) ; //number of leaves
+
+    max  := maximum(root ) ; // maximum in tree
+
+    FullTree := IsFUlltree ( root) ; //Is full Tree ? 
+
+    Write("number of node" , nbN ,"and height is" , hght ,"  number of leaves is" , LeavesTrr , "maximun in tree is ", max ," and is full tree ", FullTree) ;
+END
